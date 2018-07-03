@@ -1,0 +1,201 @@
+\documentclass{jsarticle}			% 日本語用
+\usepackage{listings}				% ソースコード用
+\usepackage[dvipdfmx]{graphicx}  	% 図の挿入用
+\usepackage{amsmath,amssymb}		% 数式
+\usepackage{float}					% 図・表位置[H]
+\usepackage{subcaption}				% subtable可
+\usepackage{hyperref}				% URL
+
+\makeatletter
+	\renewcommand*\l@subsection{\@dottedtocline{2}{10em}{5em}}
+\makeatother
+		% https://tex.stackexchange.com/questions/33841/how-to-modify-the-space-between-the-numbers-and-text-of-sectioning-titles-in-the/33842
+		%The command \@dottedtocline expects the following parameters:
+		%\renewcommand{\l@<typ>}{\@dottedtocline{<level>}%
+		%                                       {<indentation>}%
+		%                                       {<numwidth>}}
+
+\title{タイトル}
+\author{pollenJP}
+
+\begin{document}
+	
+	\maketitle
+	
+	\renewcommand\contentsname{目次（もくじだよ）}
+	\tableofcontents
+	\addtocontents{toc}{
+		{\fontsize{20.0pt}{0pt}\selectfont 目次}
+		\hfill\textbf{Page}\par}
+	\addcontentsline{toc}{section}{Preface}
+	\addcontentsline{toc}{subsection}{Preface}
+	
+	\section{TableOfContents}
+		\begin{itemize}
+			\item \url{https://tex.stackexchange.com/questions
+				/33841/how-to-modify-the-space-between-the-numbers-
+				and-text-of-sectioning-titles-in-the/33842
+				}
+			\item \url{https://en.wikibooks.org/wiki/LaTeX/Document_Structure}
+			\item \url{https://cmry.github.io/notes/latextoc}
+		\end{itemize}
+	
+	\section{Who is pollenJP?}
+		\subsection{pollenJPJP}
+			\subsubsection{pollenJPJPJP}
+				\begin{enumerate}
+					\item aaa
+					\item bbb
+					\item ccc
+					\item ddd
+				\end{enumerate}
+				%
+				\begin{description}
+					\item[Block のパラメータの設定 Gaussian Noise Generator]\mbox{}
+						\begin{itemize}
+							\item 平均値(Mean Value)=0
+							\item 分散(Variance)=0.8
+							\item サンプル時間=0.01 秒
+						\end{itemize}
+					\item[シミュレーション時間]\mbox{}
+						\begin{itemize}
+							\item 終了時間 10 秒
+						\end{itemize}
+					\item[その他]\mbox{}
+						\begin{itemize}
+							\item Signal To Workspace,Display は,設定の変更は必要ない.
+						\end{itemize}
+					\item[hello]\mbox{}\\
+						あいうえお
+				\end{description}
+
+			\subsubsection{pollenJPJPJP2}
+				hello
+		\subsection{pollenJPJP2}
+			hello
+	
+	\section{表}
+		以下の表\ref{課題1.2: M=2の表}を示す.
+		% table
+		\begin{table}[H]  % t(top),b(bottom),p(page),h(できればhere),H(必ずhere)
+			\caption[M=2]{課題1.2: M=2の表}
+			\label{課題1.2: M=2の表}
+			\begin{center}
+				\setlength{\tabcolsep}{3pt}
+				\footnotesize
+				\begin{tabular}{|c|c|c} \hline
+					シンボル & ビット \\ \hline \hline
+					0 & 0 \\ \hline
+					1 & 1 \\ \hline
+				\end{tabular}
+			\end{center}
+		\end{table}
+		
+		\subsection{subtable}
+			以下の表\ref{課題1.2: 課題}
+			% table
+			\begin{table}[H]
+				\begin{subtable}{0.49\columnwidth}
+					\begin{center}
+						\caption[M=2]{M=2の表}
+						\label{課題1.2: M=2の表}
+						\setlength{\tabcolsep}{3pt}
+						\footnotesize
+						\begin{tabular}{|c|c|c}
+							\hline
+							シンボル & ビット \\ \hline \hline
+							0 & 0 \\ \hline
+							1 & 1 \\ \hline
+						\end{tabular}
+					\end{center}
+				\end{subtable}
+				\begin{subtable}{0.49\columnwidth}
+					\begin{center}
+						\caption[M=4]{M=4の表}
+						\label{課題1.2: M=4の表}
+						\setlength{\tabcolsep}{3pt}
+						\footnotesize
+						\begin{tabular}{|c|c|c}
+							\hline
+							シンボル & ビット \\ \hline \hline
+							0 & 00 \\ \hline
+							1 & 01 \\ \hline
+							2 & 10 \\ \hline
+							3 & 11 \\ \hline
+						\end{tabular}
+					\end{center}
+				\end{subtable}
+				\begin{subtable}{\columnwidth}
+					\begin{center}
+						\caption[M]{課題}
+						\label{課題1.2: 課題}
+						\setlength{\tabcolsep}{3pt}
+						\footnotesize
+						\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+							\hline
+							
+								& \multicolumn{6}{|l|}{M=2}
+								& \multicolumn{6}{|l|}{M=4} \\ \hline
+							時間 
+								& 0 & 1 & 2 & 3 & 4 & 5
+								& 0 & 1 & 2 & 3 & 4 & 5 \\ \hline
+							シンボル列
+								& 1 & 0 & 0 & 0 & 1 & 1
+								& 2 & 0 & 0 & 1 & 2 & 3 \\ \hline
+							ビット列
+								&  1 &  0 &  0 &  0 &  1 &  1
+								& 10 & 00 & 00 & 01 & 10 & 11 \\ \hline
+						\end{tabular}
+					\end{center}
+				\end{subtable}
+			\end{table}
+
+	
+	\section{図} \label{section図}
+		以下の図
+		%figure
+		\begin{figure}
+		
+		\end{figure}
+		% figure
+%		\begin{figure}[H]  % t(top),b(bottom),p(page),h(できればhere),H(必ずhere)
+%			\begin{center}
+%				\includegraphics[width=0.8\textwidth]{fig01_kadai1-1.png}
+%				\caption{課題1.1:構成}
+%				\label{課題1.1:構成}
+%			\end{center}
+%		\end{figure}
+%
+	
+	% save old section configure
+	\let\oldthesection=\thesection
+	\let\oldthesubsection=\thesubsection
+%	\setcounter{section}{0}
+	\renewcommand{\thesection}{課題\arabic{section}}
+	\renewcommand{\thesubsection}{課題\arabic{section}.\arabic{subsection}}
+	\section{セクションタイトル替え} \label{課題1}
+		\subsection*{実験内容}
+		\subsection{サブタイトルも変える}
+			\subsubsection{subsub}
+				\begin{itemize}
+					\item \url{
+						https://groups.google.com/forum/#!topic/comp.text.tex/EcAPeYr-ySE}
+				\end{itemize}
+			\subsubsection*{subsub2}
+		\subsection{次のセクションでタイトルを戻す}
+
+	\let\thesection=\oldthesection
+	\let\thesubsection=\oldthesubsection
+	\section{URLを使用}
+		\begin{itemize}
+			\item \url{https://www.sharelatex.com/learn/Hyperlinks}
+		\end{itemize}
+		
+		
+
+
+\end{document}
+
+		
+		
+
