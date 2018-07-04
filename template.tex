@@ -5,15 +5,19 @@
 \usepackage{float}					% 図・表位置[H]
 \usepackage{subcaption}				% subtable可
 \usepackage{hyperref}				% URL
+\usepackage{slashbox}				% 表の左上の斜線等
+	% download to the same directory
+	% ref : https://www.biwako.shiga-u.ac.jp/sensei/kumazawa/tex/slashbox.html
 
 \makeatletter
 	\renewcommand*\l@subsection{\@dottedtocline{2}{10em}{5em}}
 \makeatother
-		% https://tex.stackexchange.com/questions/33841/how-to-modify-the-space-between-the-numbers-and-text-of-sectioning-titles-in-the/33842
 		%The command \@dottedtocline expects the following parameters:
 		%\renewcommand{\l@<typ>}{\@dottedtocline{<level>}%
 		%                                       {<indentation>}%
 		%                                       {<numwidth>}}
+		% https://tex.stackexchange.com/questions/33841/how-to-modify-the-space-between-the-numbers-and-text-of-sectioning-titles-in-the/33842
+
 
 \title{タイトル}
 \author{pollenJP}
