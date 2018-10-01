@@ -1,14 +1,60 @@
-\documentclass{jsarticle}			% 日本語用
-\usepackage{listings}				% ソースコード用
+\documentclass{jsarticle}	       % 日本語用
+%\documentclass[fleqn,twocolumn,10pt]{jsarticle}
+%	 [数式左揃え,ページ分割,フォントサイズ]{日本語用}
+%\setlength{\mathindent}{1zw}
+%\setlength{\columnsep}{3zw}
+
+\usepackage{listings}				     % ソースコード用
 \usepackage[dvipdfmx]{graphicx}  	% 図の挿入用
 \usepackage{amsmath,amssymb}		% 数式
 \usepackage{float}					% 図・表位置[H]
 \usepackage{subcaption}				% subtable可
-\usepackage{hyperref}				% URL
-\usepackage{slashbox}				% 表の左上の斜線等
+\usepackage[dvipdfmx,]{hyperref} % Link/URL
+\usepackage{pxjahyper}           % "hyperref"の日本語文字化け対策
+%\usepackage{url}
+\usepackage{slashbox}				% 表の左上の斜線等 (sty file)
 	% download to the same directory
 	% ref : https://www.biwako.shiga-u.ac.jp/sensei/kumazawa/tex/slashbox.html
+\usepackage{color,soul}          % highlight (sty file)
+\usepackage{makeidx}             % 索引
+\makeindex                       % 索引
+\usepackage{tcolorbox}
+\usepackage{ascmac}
+\usepackage{enumitem}
+\usepackage{tikz-network}
 
+
+% センターライン(twocolumn)
+%\setlength{\columnseprule}{0.4pt}
+
+% 行列matrixのサイズをスケーリングする
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+
+% ハイライト
+%% 日本語ハイライト
+\newcommand{\HL}[1]{\hl{\mbox{#1}}}
+%% ref: http://otoya8bit.hatenablog.jp/entry/2013/11/28/153226
+%% カラー設定
+%\sethlcolor{blue}
+
+% url custom	
+% hyperref
+\hypersetup{
+		colorlinks,  % これをtrueにすると何故かbuildしたとき画像(image)がpdfに表示されなくなったことがあった
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    bookmarksopen,
+    bookmarksdepth=2,
+    bookmarkstype=toc,  % toc link
+%    linktocpage=true,   % tocのページ番号にリンクが現れる
+    bookmarks=true,     % toc link
+    % ref
+    % https://texwiki.texjp.org/?hyperref#h026c44c
+}
+
+
+% tableofcontents
 \makeatletter
 	\renewcommand*\l@subsection{\@dottedtocline{2}{10em}{5em}}
 \makeatother
@@ -43,15 +89,83 @@
 			\item \url{https://en.wikibooks.org/wiki/LaTeX/Document_Structure}
 			\item \url{https://cmry.github.io/notes/latextoc}
 		\end{itemize}
+
+	\section{環の定義}
+		\begin{enumerate}[label=\fbox{\arabic*}]
+			\item
+				{[問]}\\
+					$R$を環とする. $0 \in R$を零元とすると, $\forall a \in R$ に対して
+					\[ a \cdot 0 = 0 \cdot a = 0 \] となることを示せ. \\
+				{[解答]}\\
+					\begin{align*}
+						& 0 = 0 + 0 \\
+						& (\because 零元の定義) \\
+						\Leftrightarrow & a \cdot 0 = a \cdot ( 0 + 0 )\\
+						                & (\text{左からaをかける})\\
+						\Leftrightarrow & a \cdot 0 = a \cdot 0 + a \cdot 0\\
+						                & (\because \text{分配則})\\
+						\Leftrightarrow & a \cdot 0 - a \cdot 0 = a \cdot 0 + a \cdot 0 - a \cdot 0\\
+						                & (\because \text{両辺に加法逆元を加える})\\
+						\Leftrightarrow & 0 = a \cdot 0\\
+						                & (\because \text{結合則と加法逆元の性質})
+					\end{align*}
+					同様に
+					\begin{align*}
+						\Leftrightarrow & 0 \cdot a = (0 + 0) \cdot a\\
+						                & (\text{右からaをかける})\\
+						\Leftrightarrow & 0 \cdot a = 0 \cdot a + 0 \cdot a\\
+						                & (\because \text{分配則})\\
+						\Leftrightarrow & 0 \cdot a - 0 \cdot a = 0 \cdot a + 0 \cdot a - 0 \cdot a\\
+						                & (\because \text{両辺に加法逆元を加える})\\
+						\Leftrightarrow & 0 = 0 \cdot a\\
+						                & (\because \text{結合則と加法逆元の性質})
+					\end{align*}
+					よって, $a \cdot 0 = 0 \cdot a = 0$ \hfill $\Box$
+
+			\item
+				{[問]}\\
+					環$R$において乗法の単位元は一意であることを示せ.\\
+				{[解答]}\\
+					$e^{*}, e^{'*} \in R$がともに環$R$の乗法の単位元であるとする.
+					\begin{align*}
+						e^{*} &= e^{*} \cdot e^{'*} & (\because e^{'*} \text{は単位元})\\
+									&= e^{'*} & (\because e^{*} \text{は単位元})
+					\end{align*}
+					\hfill $\Box$
+
+			\item
+				{[問]}\\
+					$R$を環とする. $a \in R$に対して左逆元$b$と右逆元$c$が存在するとき, $b=c$であることを示せ.\\
+					また,それらを$a$の逆元というが, $a$の逆元が一意であることを示せ.\\
+				{[解答]}\\
+					\begin{itembox}[l]{左逆元・右逆元の定義}
+						hello
+					\end{itembox}
+		\end{enumerate}
+
 	
 	\section{Who is pollenJP?}
-		\subsection{pollenJPJP}
+		\begin{tcolorbox}
+			hhh
+		\end{tcolorbox}
+
+		\subsection{list}
 			\subsubsection{pollenJPJPJP}
 				\begin{enumerate}
+					\item \HL{ハイライト}
+					\sethlcolor{red}
+					\item \HL{カラー変更}
+					\item ccc\index{ccc}
+					\item ddd
+				\end{enumerate}
+				\begin{enumerate}
+					\setcounter{enumi}{8}
 					\item aaa
 					\item bbb
 					\item ccc
-					\item ddd
+					\item \url{https://tex.stackexchange.com/questions
+						/142/how-can-i-make-an-enumerate-list-start
+						-at-something-other-than-1}
 				\end{enumerate}
 				%
 				\begin{description}
@@ -79,6 +193,7 @@
 			hello
 	
 	\section{表}
+		\subsection{Normal}
 		以下の表\ref{課題1.2: M=2の表}を示す.
 		% table
 		\begin{table}[H]  % t(top),b(bottom),p(page),h(できればhere),H(必ずhere)
@@ -153,6 +268,59 @@
 					\end{center}
 				\end{subtable}
 			\end{table}
+			
+		\subsection{斜線}
+			% table
+			\begin{table}[H]
+				\begin{center}
+					\caption{課題2.1: 雑音の統計値(平均値と分散)}
+					\label{課題2.1: 雑音の統計値(平均値と分散)}
+					\begin{tabular}{|l||c|c|}
+						\hline
+						\backslashbox{統計値}{分散(設定値)} & 1 & 2 \\ \hline\hline
+						平均値 & -0.0247 & -0.0349 \\ \hline
+						分散 & 0.9850 & 1.97 \\ \hline
+					\end{tabular}
+				\end{center}
+			\end{table}
+
+		\subsection{$p$次元データ（共分散・相関係数）}
+			\HL{\textgt{偏差積和}}
+			\begin{align*}
+				S_{ij} = \frac{1}{n} \sum\limits_{i=1}^n 
+				(x_{j_1j_2}-\bar{x_{j_1}})(x_{ij_2}-\bar{x_{j_2}})
+			\end{align*}
+			% table
+	    	\begin{table}[H]
+	    		\raggedright
+    			\caption{多変量データ例}
+    			\label{第2回 多変量データ例}
+    			\scalebox{0.8}[1.0]{
+	    			\begin{tabular}{|r|c|c|c|} \hline
+	    				No. & $x_{j_1}$ & $x_{j_2}$ & 偏差積 \\
+	    				\hline \hline
+	    				$1$ & $x_{1j_1}$ & $x_{1j_2}$ 
+	    					& $(x_{1j_1}-\bar{x_{j_1}})(x_{1j_2}-\bar{x_{j_2}})$
+	    					\\ \hline
+	    				$2$ & $x_{2j_1}$ & $x_{2j_2}$ 
+	    					& $(x_{2j_1}-\bar{x_{j_1}})(x_{2j_2}-\bar{x_{j_2}})$
+	    					\\ \hline
+	    				$\vdots$ & & & \\ \hline
+	    				$i$ & $x_{ij_1}$ & $x_{1j_2}$ 
+	    					& $(x_{ij_1}-\bar{x_{j_1}})(x_{ij_2}-\bar{x_{j_2}})$
+		    				\\ \hline
+	    				$\vdots$ & & & \\ \hline
+	    				$n$ & $x_{nj_1}$ & $x_{nj_2}$ 
+	    					& $(x_{nj_1}-\bar{x_{j_1}})(x_{nj_2}-\bar{x_{j_2}})$
+		    				\\ \hline
+	    				& $\bar{x_{j_1}}$ &  $\bar{x_{j_2}}$ 
+	    					& $S_{ij} = \frac{1}{n} \sum\limits_{i=1}^n 
+	    					(x_{j_1j_2}-\bar{x_{j_1}})(x_{ij_2}-\bar{x_{j_2}})$
+	    				\\ \hline
+	    			\end{tabular}
+    			}
+	    	\end{table}
+
 
 	
 	\section{図} \label{section図}
@@ -170,6 +338,22 @@
 %			\end{center}
 %		\end{figure}
 %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{TIKZ-NETWORK - 描画} \label{TIKZ}
+		\begin{itemize}
+			\item ここにいろいろ公開されている \url{https://arxiv.org/abs/1709.06005}
+			\item tikz-network.styをダウンロードしなければいけない
+			\begin{itemize}
+				\item \url{https://ctan.org/tex-archive/graphics/pgf/contrib/tikz-network}
+			\end{itemize}
+		\end{itemize}
+		\begin{tikzpicture}
+			\filldraw ( -.2, .2) circle (2pt) (.2,.2) circle (2pt);
+			\draw (0,0) circle (5mm) (-.3, -.1) .. controls (0,-.3) .. (.3,-.1);
+		\end{tikzpicture}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 	
 	% save old section configure
 	\let\oldthesection=\thesection
@@ -194,10 +378,104 @@
 		\begin{itemize}
 			\item \url{https://www.sharelatex.com/learn/Hyperlinks}
 		\end{itemize}
-		
+	
+	\section{数式} \label{数式}
+		\subsection{Show inline math as if it were display math}
+			\url{https://tex.stackexchange.com/questions/32824/
+				show-inline-math-as-if-it-were-display-math}
+			$\frac{1}{n-1} \sum\limits_{i=1}^{n} (x_{ij} - \bar{x_j})^2$
+			
+			$\prod\limits_{j=0}^J k_j$
+			
+			$\int\limits_{-\infty}^\infty f(x)\,\mathrm{d}x$
+			
+		\subsection{実験内容}
+			変調とは,伝送媒体である波(電波,光など)に情報を乗せる操作である.
+			波は.振幅と周波数,位相をパラメータとして構成される.
+			伝送媒体の波を搬送波(Carrier)と呼ぶ.搬送波は,次式で表せる.
+			% math
+			\begin{align}
+				\label{math:搬送波}
+				s(t) = r(t) \cdot cos(2 \pi f_c t + \vartheta (t) )
+			\end{align}
+			$f_c$ を搬送波周波数と呼ぶ.携帯電話の代表値では 860MHz である.
+			式(\ref{math:搬送波})を展開すると次式を得る.
+			% math
+			\begin{align}
+				\label{math:搬送波（展開）}
+				s(t) = I(t) \cdot cos(2 \pi f_c t) - Q(t) \cdot sin(2 \pi f_c t)
+			\end{align}
+			式(\ref{math:搬送波})は式(\ref{math:搬送波（展開）})と等価であり,
+			表現の方法が違うのみである.式(\ref{math:搬送波（展開）})の表現において
+			$I(t)$を搬送波の同相成分,$Q(t)$を直交成分と言う.
+			これは余弦波と正弦波が互いに直交(1 周期積分してゼロとなる)しているためである.
+			さらに,式(\ref{math:搬送波（展開）})は次のように表せる.
+			% math
+			\begin{align}
+				\label{搬送波（展開）別表現}
+				\begin{split}
+					s(t) 
+						&= Re \left\{ \left( I(t) + j \cdot Q(t) \right)
+							\cdot e^{j2 \pi f_c t} \right\} \\
+						&= Re \left\{ u(t) \cdot e^{j2 \pi f_c t} \right\} \\
+					u(t)&= I(t) + j \cdot Q(t)
+				\end{split}
+			\end{align}
+
+		\subsection{行列のスケーリング}
+			% 行列matrixのサイズをスケーリングする
+			%\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+			\begin{align*}
+				X
+				&= \begin{bmatrix}
+						\sum\limits_{i=1}^n (x_{i1}-\bar{x_1})^2 & \cdots 
+							& \sum\limits_{i=1}^n (x_{i1}-\bar{x_1})(x_{ip}-\bar{x_p}) \\
+						\vdots & \ddots & \vdots \\
+						\sum\limits_{i=1}^n (x_{ip}-\bar{x_p})(x_{i1}-\bar{x_1}) 
+							& \cdots & \sum\limits_{i=1}^n (x_{ip}-\bar{x_p})^2
+					\end{bmatrix} \\
+				&= \scalemath{0.3}{
+						\begin{bmatrix}
+							\sum\limits_{i=1}^n (x_{i1}-\bar{x_1})^2 & \cdots 
+								& \sum\limits_{i=1}^n (x_{i1}-\bar{x_1})(x_{ip}-\bar{x_p}) \\
+							\vdots & \ddots & \vdots \\
+							\sum\limits_{i=1}^n (x_{ip}-\bar{x_p})(x_{i1}-\bar{x_1}) 
+								& \cdots & \sum\limits_{i=1}^n (x_{ip}-\bar{x_p})^2
+						\end{bmatrix}
+					}
+			\end{align*}
+
+	
+	\section{プログラミングコード}
+		以下のPython3コードによって描画した.
+		% Coding
+		\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+import numpy as np
+import matplotlib.pyplot as plt
+
+f = np.arange(-5.0, 5.1, 0.1)
+print(f.shape)
+
+T = 2
+G_f = T * np.sin(np.pi * f * T)
+W_f = abs(G_f)**2 / T
+P_f = 10 * np.log10(W_f)
+
+fig = plt.figure(figsize=(15, 10))
+ax = fig.add_subplot(1,1,1)
+ax.plot(f,P_f, label="P(f)")
+ax.set_title("Power Spectrum")
+ax.set_xlabel("frequency[Hz]")
+ax.set_ylabel("Magnitude-squared [dB]")
+ax.legend(loc="lower right", prop={'size': 20})
+plt.show()
+		\end{lstlisting}
 		
 
 
+		
+
+	\printindex
 \end{document}
 
 		
