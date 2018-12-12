@@ -18,4 +18,5 @@ platex -kanji=utf8 %.tex | mendex -s myindex.ist %.idx | platex -kanji=utf8 %.te
 - [LaTeX でサブディレクトリが自動的に探索されるようにする - Qiita](https://qiita.com/zr_tex8r/items/2ef6f8d780887a4e01e0)
 - [Is there any way I can define a variable in LaTeX? - Stack Overflow](https://stackoverflow.com/a/1211905/9316234)
 - [LaTeX/Macros - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/LaTeX/Macros#New_commands)
+- [Help On LaTeX \newcommand and \renewcommand](https://www.complang.tuwien.ac.at/anton/latex/ltx-18.html)
 
