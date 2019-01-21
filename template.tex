@@ -1,28 +1,79 @@
-\documentclass{jsarticle}	       % 日本語用
+\documentclass{jsarticle}           % 日本語用
 %\documentclass[fleqn,twocolumn,10pt]{jsarticle}
-%	 [数式左揃え,ページ分割,フォントサイズ]{日本語用}
+%   [数式左揃え,ページ分割,フォントサイズ]{日本語用}
 %\setlength{\mathindent}{1zw}
 %\setlength{\columnsep}{3zw}
 
-\usepackage{listings}				     % ソースコード用
-\usepackage[dvipdfmx]{graphicx}  	% 図の挿入用
-\usepackage{amsmath,amssymb}		% 数式
-\usepackage{float}					% 図・表位置[H]
-\usepackage{subcaption}				% subtable可
-\usepackage[dvipdfmx,]{hyperref} % Link/URL
-\usepackage{pxjahyper}           % "hyperref"の日本語文字化け対策
+%===============================================================================
+% section の階層の深さ
+%===============================================================================
+% LaTeXコマンドシート一覧 - 部・章・節・小節・小々節
+% http://www002.upp.so-net.ne.jp/latex/bu.html
+% \part*{名前}
+% \chapter*{名前}
+% \section*{名前}
+% \subsection*{名前}
+% \subsubsection*{名前}
+%
+% sectioning - How to add an extra level of sections with headings below \subsubsection - TeX - LaTeX Stack Exchange
+% https://tex.stackexchange.com/a/60212
+\usepackage{titlesec}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+% sectioning - Creating a bold and indented title. - TeX - LaTeX Stack Exchange
+% https://tex.stackexchange.com/a/78775
+%\renewcommand\thesection{\Roman{section}} 
+%\renewcommand\thesubsection{\thesection.\Roman{subsection}} 
+\renewcommand\thesection{\arabic{section}} 
+\renewcommand\thesubsection{\thesection.\arabic{subsection}} 
+\renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}} 
+% Font Size
+% \part*{名前}
+% \chapter*{名前}
+% \section*{名前}
+% \subsection*{名前}
+% \subsubsection*{名前}
+%\titleformat{\part         }[block]{\Huge }{\thepart.        }{1em}{} 
+%\titleformat{\chapter      }[block]{\huge }{\thechapter.     }{1em}{} 
+\titleformat{\section      }[block]{\LARGE}{\thesection.     }{1em}{} 
+\titleformat{\subsection   }[block]{\Large}{\thesubsection   }{1em}{}
+\titleformat{\subsubsection}[block]{\large}{\thesubsubsection}{1em}{}
+
+%===============================================================================
+%===============================================================================
+\usepackage{listings}               % ソースコード用
+\usepackage[dvipdfmx]{graphicx}     % 図の挿入用
+%===============================================================================
+%===============================================================================
+\usepackage{amsmath,amssymb,amsthm} % 数式
+% definition
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}[thm]
+%===============================================================================
+%===============================================================================
+\usepackage{float}                % 図・表位置[H]
+\usepackage{subcaption}           % subtable可
+\usepackage[dvipdfmx,]{hyperref}  % Link/URL
+\usepackage{pxjahyper}            % "hyperref"の日本語文字化け対策
 %\usepackage{url}
-\usepackage{slashbox}				% 表の左上の斜線等 (sty file)
-	% download to the same directory
-	% ref : https://www.biwako.shiga-u.ac.jp/sensei/kumazawa/tex/slashbox.html
-\usepackage{color,soul}          % highlight (sty file)
-\usepackage{makeidx}             % 索引
-\makeindex                       % 索引
+\usepackage{slashbox}             % 表の左上の斜線等 (sty file)
+    % download to the same directory
+    % ref : https://www.biwako.shiga-u.ac.jp/sensei/kumazawa/tex/slashbox.html
+\usepackage{color,soul}           % highlight (sty file)
+\usepackage{makeidx}              % 索引
+\makeindex                        % 索引
 \usepackage{tcolorbox}
 \usepackage{ascmac}
 \usepackage{enumitem}
 \usepackage{tikz-network}
 
+%===============================================================================
+%===============================================================================
 
 % センターライン(twocolumn)
 %\setlength{\columnseprule}{0.4pt}
@@ -30,6 +81,8 @@
 % 行列matrixのサイズをスケーリングする
 \newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
 
+%===============================================================================
+%===============================================================================
 % ハイライト
 %% 日本語ハイライト
 \newcommand{\HL}[1]{\hl{\mbox{#1}}}
@@ -37,10 +90,12 @@
 %% カラー設定
 %\sethlcolor{blue}
 
-% url custom	
+%===============================================================================
+% url custom  
+%===============================================================================
 % hyperref
 \hypersetup{
-		colorlinks,  % これをtrueにすると何故かbuildしたとき画像(image)がpdfに表示されなくなったことがあった
+    colorlinks,  % これをtrueにすると何故かbuildしたとき画像(image)がpdfに表示されなくなったことがあった
     linkcolor=blue,
     filecolor=magenta,      
     urlcolor=cyan,
@@ -54,402 +109,412 @@
 }
 
 
+%===============================================================================
 % tableofcontents
+%===============================================================================
 \makeatletter
-	\renewcommand*\l@subsection{\@dottedtocline{2}{10em}{5em}}
+    %\renewcommand{\l@<typ>        }{\@dottedtocline{<level>}{<indentation>}{<numwidth>}}
+    \renewcommand*{\l@subsection   }{\@dottedtocline{      2}{         10em}{       5em}}
+    \renewcommand*{\l@subsubsection}{\@dottedtocline{      3}{         15em}{       5em}}
 \makeatother
-		%The command \@dottedtocline expects the following parameters:
-		%\renewcommand{\l@<typ>}{\@dottedtocline{<level>}%
-		%                                       {<indentation>}%
-		%                                       {<numwidth>}}
-		% https://tex.stackexchange.com/questions/33841/how-to-modify-the-space-between-the-numbers-and-text-of-sectioning-titles-in-the/33842
+        %The command \@dottedtocline expects the following parameters:
+        %\renewcommand{\l@<typ>}{\@dottedtocline{<level>}%
+        %                                       {<indentation>}%
+        %                                       {<numwidth>}}
+        % https://tex.stackexchange.com/questions/33841/how-to-modify-the-space-between-the-numbers-and-text-of-sectioning-titles-in-the/33842
 
 
+%===============================================================================
+%===============================================================================
 \title{タイトル}
 \author{pollenJP}
 
+%===============================================================================
+%===============================================================================
 \begin{document}
-	
-	\maketitle
-	
-	\renewcommand\contentsname{目次（もくじだよ）}
-	\tableofcontents
-	\addtocontents{toc}{
-		{\fontsize{20.0pt}{0pt}\selectfont 目次}
-		\hfill\textbf{Page}\par}
-	\addcontentsline{toc}{section}{Preface}
-	\addcontentsline{toc}{subsection}{Preface}
-	
-	\section{TableOfContents}
-		\begin{itemize}
-			\item \url{https://tex.stackexchange.com/questions
-				/33841/how-to-modify-the-space-between-the-numbers-
-				and-text-of-sectioning-titles-in-the/33842
-				}
-			\item \url{https://en.wikibooks.org/wiki/LaTeX/Document_Structure}
-			\item \url{https://cmry.github.io/notes/latextoc}
-		\end{itemize}
+    
+\maketitle
+    
+\renewcommand\contentsname{目次（もくじだよ）}
+\tableofcontents
+\addtocontents{toc}{
+  {\fontsize{20.0pt}{0pt}\selectfont 目次}
+  \hfill\textbf{Page}\par}
+\addcontentsline{toc}{section}{Preface}
+\addcontentsline{toc}{subsection}{Preface}
+    
+\section{TableOfContents}
+\begin{itemize}
+  \item \url{https://tex.stackexchange.com/questions
+              /33841/how-to-modify-the-space-between-the-numbers-
+              and-text-of-sectioning-titles-in-the/33842
+        }
+  \item \url{https://en.wikibooks.org/wiki/LaTeX/Document_Structure}
+  \item \url{https://cmry.github.io/notes/latextoc}
+\end{itemize}
 
-	\section{環の定義}
-		\begin{enumerate}[label=\fbox{\arabic*}]
-			\item
-				{[問]}\\
-					$R$を環とする. $0 \in R$を零元とすると, $\forall a \in R$ に対して
-					\[ a \cdot 0 = 0 \cdot a = 0 \] となることを示せ. \\
-				{[解答]}\\
-					\begin{align*}
-						& 0 = 0 + 0 \\
-						& (\because 零元の定義) \\
-						\Leftrightarrow & a \cdot 0 = a \cdot ( 0 + 0 )\\
-						                & (\text{左からaをかける})\\
-						\Leftrightarrow & a \cdot 0 = a \cdot 0 + a \cdot 0\\
-						                & (\because \text{分配則})\\
-						\Leftrightarrow & a \cdot 0 - a \cdot 0 = a \cdot 0 + a \cdot 0 - a \cdot 0\\
-						                & (\because \text{両辺に加法逆元を加える})\\
-						\Leftrightarrow & 0 = a \cdot 0\\
-						                & (\because \text{結合則と加法逆元の性質})
-					\end{align*}
-					同様に
-					\begin{align*}
-						\Leftrightarrow & 0 \cdot a = (0 + 0) \cdot a\\
-						                & (\text{右からaをかける})\\
-						\Leftrightarrow & 0 \cdot a = 0 \cdot a + 0 \cdot a\\
-						                & (\because \text{分配則})\\
-						\Leftrightarrow & 0 \cdot a - 0 \cdot a = 0 \cdot a + 0 \cdot a - 0 \cdot a\\
-						                & (\because \text{両辺に加法逆元を加える})\\
-						\Leftrightarrow & 0 = 0 \cdot a\\
-						                & (\because \text{結合則と加法逆元の性質})
-					\end{align*}
-					よって, $a \cdot 0 = 0 \cdot a = 0$ \hfill $\Box$
+\section{環の定義}
+\begin{enumerate}[label=\fbox{\arabic*}]
+  \item
+        {[問]}\\
+        $R$を環とする. $0 \in R$を零元とすると, $\forall a \in R$ に対して,
+        \[ a \cdot 0 = 0 \cdot a = 0 \] となることを示せ. \\
+        {[解答]}\\
+        \begin{align*}
+                          & 0 = 0 + 0                                                 \\
+                          & (\because 零元の定義)                                \\
+          \Leftrightarrow & a \cdot 0 = a \cdot ( 0 + 0 )                             \\
+                          & (\text{左からaをかける})                           \\
+          \Leftrightarrow & a \cdot 0 = a \cdot 0 + a \cdot 0                         \\
+                          & (\because \text{分配則})                               \\
+          \Leftrightarrow & a \cdot 0 - a \cdot 0 = a \cdot 0 + a \cdot 0 - a \cdot 0 \\
+                          & (\because \text{両辺に加法逆元を加える})       \\
+          \Leftrightarrow & 0 = a \cdot 0                                             \\
+                          & (\because \text{結合則と加法逆元の性質})       
+        \end{align*}
+        同様に
+        \begin{align*}
+          \Leftrightarrow & 0 \cdot a = (0 + 0) \cdot a                               \\
+                          & (\text{右からaをかける})                           \\
+          \Leftrightarrow & 0 \cdot a = 0 \cdot a + 0 \cdot a                         \\
+                          & (\because \text{分配則})                               \\
+          \Leftrightarrow & 0 \cdot a - 0 \cdot a = 0 \cdot a + 0 \cdot a - 0 \cdot a \\
+                          & (\because \text{両辺に加法逆元を加える})       \\
+          \Leftrightarrow & 0 = 0 \cdot a                                             \\
+                          & (\because \text{結合則と加法逆元の性質})       
+        \end{align*}
+        よって, $a \cdot 0 = 0 \cdot a = 0$ \hfill $\Box$
+        
+  \item
+        {[問]}\\
+        環$R$において乗法の単位元は一意であることを示せ.\\
+        {[解答]}\\
+        $e^{*}, e^{'*} \in R$がともに環$R$の乗法の単位元であるとする.
+        \begin{align*}
+          e^{*} & = e^{*} \cdot e^{'*} & (\because e^{'*} \text{は単位元}) \\
+                & = e^{'*}             & (\because e^{*} \text{は単位元})  
+        \end{align*}
+        \hfill $\Box$
+        
+  \item
+        {[問]}\\
+        $R$を環とする. $a \in R$に対して左逆元$b$と右逆元$c$が存在するとき, $b=c$であることを示せ.\\
+        また,それらを$a$の逆元というが, $a$の逆元が一意であることを示せ.\\
+        {[解答]}\\
+        \begin{itembox}[l]{左逆元・右逆元の定義}
+          hello
+        \end{itembox}
+\end{enumerate}
 
-			\item
-				{[問]}\\
-					環$R$において乗法の単位元は一意であることを示せ.\\
-				{[解答]}\\
-					$e^{*}, e^{'*} \in R$がともに環$R$の乗法の単位元であるとする.
-					\begin{align*}
-						e^{*} &= e^{*} \cdot e^{'*} & (\because e^{'*} \text{は単位元})\\
-									&= e^{'*} & (\because e^{*} \text{は単位元})
-					\end{align*}
-					\hfill $\Box$
+    
+\section{Who is pollenJP?}
+\begin{tcolorbox}
+  hhh
+\end{tcolorbox}
 
-			\item
-				{[問]}\\
-					$R$を環とする. $a \in R$に対して左逆元$b$と右逆元$c$が存在するとき, $b=c$であることを示せ.\\
-					また,それらを$a$の逆元というが, $a$の逆元が一意であることを示せ.\\
-				{[解答]}\\
-					\begin{itembox}[l]{左逆元・右逆元の定義}
-						hello
-					\end{itembox}
-		\end{enumerate}
+\subsection{list}
+\subsubsection{pollenJPJPJP}
+\begin{enumerate}
+  \item \HL{ハイライト}
+        \sethlcolor{red}
+  \item \HL{カラー変更}
+  \item ccc\index{ccc}
+  \item ddd
+\end{enumerate}
+\begin{enumerate}
+  \setcounter{enumi}{8}
+  \item aaa
+  \item bbb
+  \item ccc
+  \item \url{https://tex.stackexchange.com/questions
+              /142/how-can-i-make-an-enumerate-list-start
+        -at-something-other-than-1}
+\end{enumerate}
+%
+\begin{description}
+  \item[Block のパラメータの設定 Gaussian Noise Generator]\mbox{}
+  \begin{itemize}
+    \item 平均値(Mean Value)=0
+    \item 分散(Variance)=0.8
+    \item サンプル時間=0.01 秒
+  \end{itemize}
+  \item[シミュレーション時間]\mbox{}
+  \begin{itemize}
+    \item 終了時間 10 秒
+  \end{itemize}
+  \item[その他]\mbox{}
+  \begin{itemize}
+    \item Signal To Workspace,Display は,設定の変更は必要ない.
+  \end{itemize}
+  \item[hello]\mbox{}\\
+  あいうえお
+\end{description}
 
-	
-	\section{Who is pollenJP?}
-		\begin{tcolorbox}
-			hhh
-		\end{tcolorbox}
+\subsubsection{pollenJPJPJP2}
+hello
+\subsection{pollenJPJP2}
+hello
+    
+\section{表}
+\subsection{Normal}
+以下の表\ref{課題1.2: M=2の表}を示す.
+% table
+\begin{table}[H]  % t(top),b(bottom),p(page),h(できればhere),H(必ずhere)
+  \caption[M=2]{課題1.2: M=2の表}
+  \label{課題1.2: M=2の表}
+  \begin{center}
+    \setlength{\tabcolsep}{3pt}
+    \footnotesize
+    \begin{tabular}{|c|c|c} \hline
+      シンボル & ビット \\ \hline \hline
+      0            & 0         \\ \hline
+      1            & 1         \\ \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+        
+\subsection{subtable}
+以下の表\ref{課題1.2: 課題}
+% table
+\begin{table}[H]
+  \begin{subtable}{0.49\columnwidth}
+    \begin{center}
+      \caption[M=2]{M=2の表}
+      \label{課題1.2: M=2の表}
+      \setlength{\tabcolsep}{3pt}
+      \footnotesize
+      \begin{tabular}{|c|c|c}
+        \hline
+        シンボル & ビット \\ \hline \hline
+        0            & 0         \\ \hline
+        1            & 1         \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{subtable}
+  \begin{subtable}{0.49\columnwidth}
+    \begin{center}
+      \caption[M=4]{M=4の表}
+      \label{課題1.2: M=4の表}
+      \setlength{\tabcolsep}{3pt}
+      \footnotesize
+      \begin{tabular}{|c|c|c}
+        \hline
+        シンボル & ビッ�� \\ \hline \hline
+        0            & 00        \\ \hline
+        1            & 01        \\ \hline
+        2            & 10        \\ \hline
+        3            & 11        \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{subtable}
+  \begin{subtable}{\columnwidth}
+    \begin{center}
+      \caption[M]{課題}
+      \label{課題1.2: 課題}
+      \setlength{\tabcolsep}{3pt}
+      \footnotesize
+      \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+                                    
+        & \multicolumn{6}{|l|}{M=2}
+        & \multicolumn{6}{|l|}{M=4} \\ \hline
+        時間 
+          & 0  & 1  & 2  & 3  & 4  & 5  
+          & 0  & 1  & 2  & 3  & 4  & 5  \\ \hline
+        シンボル列
+          & 1  & 0  & 0  & 0  & 1  & 1  
+          & 2  & 0  & 0  & 1  & 2  & 3  \\ \hline
+        ビット列
+          & 1  & 0  & 0  & 0  & 1  & 1  
+          & 10 & 00 & 00 & 01 & 10 & 11 \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{subtable}
+\end{table}
+            
+\subsection{斜線}
+% table
+\begin{table}[H]
+  \begin{center}
+    \caption{課題2.1: 雑音の統計値(平均値と分散)}
+    \label{課題2.1: 雑音の統計値(平均値と分散)}
+    \begin{tabular}{|l||c|c|}
+      \hline
+      \backslashbox{統計値}{分散(設定値)} & 1       & 2       \\ \hline\hline
+      平均値                                   & -0.0247 & -0.0349 \\ \hline
+      分散                                      & 0.9850  & 1.97    \\ \hline
+    \end{tabular}
+  \end{center}
+\end{table}
 
-		\subsection{list}
-			\subsubsection{pollenJPJPJP}
-				\begin{enumerate}
-					\item \HL{ハイライト}
-					\sethlcolor{red}
-					\item \HL{カラー変更}
-					\item ccc\index{ccc}
-					\item ddd
-				\end{enumerate}
-				\begin{enumerate}
-					\setcounter{enumi}{8}
-					\item aaa
-					\item bbb
-					\item ccc
-					\item \url{https://tex.stackexchange.com/questions
-						/142/how-can-i-make-an-enumerate-list-start
-						-at-something-other-than-1}
-				\end{enumerate}
-				%
-				\begin{description}
-					\item[Block のパラメータの設定 Gaussian Noise Generator]\mbox{}
-						\begin{itemize}
-							\item 平均値(Mean Value)=0
-							\item 分散(Variance)=0.8
-							\item サンプル時間=0.01 秒
-						\end{itemize}
-					\item[シミュレーション時間]\mbox{}
-						\begin{itemize}
-							\item 終了時間 10 秒
-						\end{itemize}
-					\item[その他]\mbox{}
-						\begin{itemize}
-							\item Signal To Workspace,Display は,設定の変更は必要ない.
-						\end{itemize}
-					\item[hello]\mbox{}\\
-						あいうえお
-				\end{description}
-
-			\subsubsection{pollenJPJPJP2}
-				hello
-		\subsection{pollenJPJP2}
-			hello
-	
-	\section{表}
-		\subsection{Normal}
-		以下の表\ref{課題1.2: M=2の表}を示す.
-		% table
-		\begin{table}[H]  % t(top),b(bottom),p(page),h(できればhere),H(必ずhere)
-			\caption[M=2]{課題1.2: M=2の表}
-			\label{課題1.2: M=2の表}
-			\begin{center}
-				\setlength{\tabcolsep}{3pt}
-				\footnotesize
-				\begin{tabular}{|c|c|c} \hline
-					シンボル & ビット \\ \hline \hline
-					0 & 0 \\ \hline
-					1 & 1 \\ \hline
-				\end{tabular}
-			\end{center}
-		\end{table}
-		
-		\subsection{subtable}
-			以下の表\ref{課題1.2: 課題}
-			% table
-			\begin{table}[H]
-				\begin{subtable}{0.49\columnwidth}
-					\begin{center}
-						\caption[M=2]{M=2の表}
-						\label{課題1.2: M=2の表}
-						\setlength{\tabcolsep}{3pt}
-						\footnotesize
-						\begin{tabular}{|c|c|c}
-							\hline
-							シンボル & ビット \\ \hline \hline
-							0 & 0 \\ \hline
-							1 & 1 \\ \hline
-						\end{tabular}
-					\end{center}
-				\end{subtable}
-				\begin{subtable}{0.49\columnwidth}
-					\begin{center}
-						\caption[M=4]{M=4の表}
-						\label{課題1.2: M=4の表}
-						\setlength{\tabcolsep}{3pt}
-						\footnotesize
-						\begin{tabular}{|c|c|c}
-							\hline
-							シンボル & ビット \\ \hline \hline
-							0 & 00 \\ \hline
-							1 & 01 \\ \hline
-							2 & 10 \\ \hline
-							3 & 11 \\ \hline
-						\end{tabular}
-					\end{center}
-				\end{subtable}
-				\begin{subtable}{\columnwidth}
-					\begin{center}
-						\caption[M]{課題}
-						\label{課題1.2: 課題}
-						\setlength{\tabcolsep}{3pt}
-						\footnotesize
-						\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-							\hline
-							
-								& \multicolumn{6}{|l|}{M=2}
-								& \multicolumn{6}{|l|}{M=4} \\ \hline
-							時間 
-								& 0 & 1 & 2 & 3 & 4 & 5
-								& 0 & 1 & 2 & 3 & 4 & 5 \\ \hline
-							シンボル列
-								& 1 & 0 & 0 & 0 & 1 & 1
-								& 2 & 0 & 0 & 1 & 2 & 3 \\ \hline
-							ビット列
-								&  1 &  0 &  0 &  0 &  1 &  1
-								& 10 & 00 & 00 & 01 & 10 & 11 \\ \hline
-						\end{tabular}
-					\end{center}
-				\end{subtable}
-			\end{table}
-			
-		\subsection{斜線}
-			% table
-			\begin{table}[H]
-				\begin{center}
-					\caption{課題2.1: 雑音の統計値(平均値と分散)}
-					\label{課題2.1: 雑音の統計値(平均値と分散)}
-					\begin{tabular}{|l||c|c|}
-						\hline
-						\backslashbox{統計値}{分散(設定値)} & 1 & 2 \\ \hline\hline
-						平均値 & -0.0247 & -0.0349 \\ \hline
-						分散 & 0.9850 & 1.97 \\ \hline
-					\end{tabular}
-				\end{center}
-			\end{table}
-
-		\subsection{$p$次元データ（共分散・相関係数）}
-			\HL{\textgt{偏差積和}}
-			\begin{align*}
-				S_{ij} = \frac{1}{n} \sum\limits_{i=1}^n 
-				(x_{j_1j_2}-\bar{x_{j_1}})(x_{ij_2}-\bar{x_{j_2}})
-			\end{align*}
-			% table
-	    	\begin{table}[H]
-	    		\raggedright
-    			\caption{多変量データ例}
-    			\label{第2回 多変量データ例}
-    			\scalebox{0.8}[1.0]{
-	    			\begin{tabular}{|r|c|c|c|} \hline
-	    				No. & $x_{j_1}$ & $x_{j_2}$ & 偏差積 \\
-	    				\hline \hline
-	    				$1$ & $x_{1j_1}$ & $x_{1j_2}$ 
-	    					& $(x_{1j_1}-\bar{x_{j_1}})(x_{1j_2}-\bar{x_{j_2}})$
-	    					\\ \hline
-	    				$2$ & $x_{2j_1}$ & $x_{2j_2}$ 
-	    					& $(x_{2j_1}-\bar{x_{j_1}})(x_{2j_2}-\bar{x_{j_2}})$
-	    					\\ \hline
-	    				$\vdots$ & & & \\ \hline
-	    				$i$ & $x_{ij_1}$ & $x_{1j_2}$ 
-	    					& $(x_{ij_1}-\bar{x_{j_1}})(x_{ij_2}-\bar{x_{j_2}})$
-		    				\\ \hline
-	    				$\vdots$ & & & \\ \hline
-	    				$n$ & $x_{nj_1}$ & $x_{nj_2}$ 
-	    					& $(x_{nj_1}-\bar{x_{j_1}})(x_{nj_2}-\bar{x_{j_2}})$
-		    				\\ \hline
-	    				& $\bar{x_{j_1}}$ &  $\bar{x_{j_2}}$ 
-	    					& $S_{ij} = \frac{1}{n} \sum\limits_{i=1}^n 
-	    					(x_{j_1j_2}-\bar{x_{j_1}})(x_{ij_2}-\bar{x_{j_2}})$
-	    				\\ \hline
-	    			\end{tabular}
-    			}
-	    	\end{table}
+\subsection{$p$次元データ（共分散・相関係数）}
+\HL{\textgt{偏差積和}}
+\begin{align*}
+  S_{ij} = \frac{1}{n} \sum\limits_{i=1}^n           
+  (x_{j_1j_2}-\bar{x_{j_1}})(x_{ij_2}-\bar{x_{j_2}}) 
+\end{align*}
+% table
+\begin{table}[H]
+  \raggedright
+  \caption{多変量データ例}
+  \label{第2回 多変量データ例}
+  \scalebox{0.8}[1.0]{
+    \begin{tabular}{|r|c|c|c|} \hline
+      No.      & $x_{j_1}$ & $x_{j_2}$ & 偏差積 \\
+      \hline \hline
+      $1$ & $x_{1j_1}$ & $x_{1j_2}$ 
+      & $(x_{1j_1}-\bar{x_{j_1}})(x_{1j_2}-\bar{x_{j_2}})$
+      \\ \hline
+      $2$ & $x_{2j_1}$ & $x_{2j_2}$ 
+      & $(x_{2j_1}-\bar{x_{j_1}})(x_{2j_2}-\bar{x_{j_2}})$
+      \\ \hline
+      $\vdots$ &           &           &           \\ \hline
+      $i$ & $x_{ij_1}$ & $x_{1j_2}$ 
+      & $(x_{ij_1}-\bar{x_{j_1}})(x_{ij_2}-\bar{x_{j_2}})$
+      \\ \hline
+      $\vdots$ &           &           &           \\ \hline
+      $n$ & $x_{nj_1}$ & $x_{nj_2}$ 
+      & $(x_{nj_1}-\bar{x_{j_1}})(x_{nj_2}-\bar{x_{j_2}})$
+      \\ \hline
+      & $\bar{x_{j_1}}$ &  $\bar{x_{j_2}}$ 
+      & $S_{ij} = \frac{1}{n} \sum\limits_{i=1}^n 
+      (x_{j_1j_2}-\bar{x_{j_1}})(x_{ij_2}-\bar{x_{j_2}})$
+      \\ \hline
+    \end{tabular}
+  }
+\end{table}
 
 
-	
-	\section{図} \label{section図}
-		以下の図
-		%figure
-		\begin{figure}
-		
-		\end{figure}
-		% figure
-%		\begin{figure}[H]  % t(top),b(bottom),p(page),h(できればhere),H(必ずhere)
-%			\begin{center}
-%				\includegraphics[width=0.8\textwidth]{fig01_kadai1-1.png}
-%				\caption{課題1.1:構成}
-%				\label{課題1.1:構成}
-%			\end{center}
-%		\end{figure}
+    
+\section{図} \label{section図}
+以下の図
+%figure
+\begin{figure}
+          
+\end{figure}
+% figure
+%    \begin{figure}[H]  % t(top),b(bottom),p(page),h(できればhere),H(必ずhere)
+%      \begin{center}
+%        \includegraphics[width=0.8\textwidth]{fig01_kadai1-1.png}
+%        \caption{課題1.1:構成}
+%        \label{課題1.1:構成}
+%      \end{center}
+%    \end{figure}
 %
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\section{TIKZ-NETWORK - 描画} \label{TIKZ}
-		\begin{itemize}
-			\item ここにいろいろ公開されている \url{https://arxiv.org/abs/1709.06005}
-			\item tikz-network.styをダウンロードしなければいけない
-			\begin{itemize}
-				\item \url{https://ctan.org/tex-archive/graphics/pgf/contrib/tikz-network}
-			\end{itemize}
-		\end{itemize}
-		\begin{tikzpicture}
-			\filldraw ( -.2, .2) circle (2pt) (.2,.2) circle (2pt);
-			\draw (0,0) circle (5mm) (-.3, -.1) .. controls (0,-.3) .. (.3,-.1);
-		\end{tikzpicture}
+\section{TIKZ-NETWORK - 描画} \label{TIKZ}
+\begin{itemize}
+  \item ここにいろいろ公開されている \url{https://arxiv.org/abs/1709.06005}
+  \item tikz-network.styをダウンロードしなければいけない
+        \begin{itemize}
+          \item \url{https://ctan.org/tex-archive/graphics/pgf/contrib/tikz-network}
+        \end{itemize}
+\end{itemize}
+\begin{tikzpicture}
+  \filldraw ( -.2, .2) circle (2pt) (.2,.2) circle (2pt);
+  \draw (0,0) circle (5mm) (-.3, -.1) .. controls (0,-.3) .. (.3,-.1);
+\end{tikzpicture}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	
-	% save old section configure
-	\let\oldthesection=\thesection
-	\let\oldthesubsection=\thesubsection
-%	\setcounter{section}{0}
-	\renewcommand{\thesection}{課題\arabic{section}}
-	\renewcommand{\thesubsection}{課題\arabic{section}.\arabic{subsection}}
-	\section{セクションタイトル替え} \label{課題1}
-		\subsection*{実験内容}
-		\subsection{サブタイトルも変える}
-			\subsubsection{subsub}
-				\begin{itemize}
-					\item \url{
-						https://groups.google.com/forum/#!topic/comp.text.tex/EcAPeYr-ySE}
-				\end{itemize}
-			\subsubsection*{subsub2}
-		\subsection{次のセクションでタイトルを戻す}
+    
+% save old section configure
+\let\oldthesection=\thesection
+\let\oldthesubsection=\thesubsection
+%  \setcounter{section}{0}
+\renewcommand{\thesection}{課題\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+%\renewcommand{\thesubsubsection}{課題\arabic{section}.\arabic{subsection}}
+\section{セクションタイトル替え} \label{課題1}
+\subsection*{実験内容}
+\subsection{サブタイトルも変える}
+\subsubsection{subsub}
+\begin{itemize}
+  \item \url{
+        https://groups.google.com/forum/#!topic/comp.text.tex/EcAPeYr-ySE}
+\end{itemize}
+\subsubsection*{subsub2}
+\subsection{次のセクションでタイトルを戻す}
 
-	\let\thesection=\oldthesection
-	\let\thesubsection=\oldthesubsection
-	\section{URLを使用}
-		\begin{itemize}
-			\item \url{https://www.sharelatex.com/learn/Hyperlinks}
-		\end{itemize}
-	
-	\section{数式} \label{数式}
-		\subsection{Show inline math as if it were display math}
-			\url{https://tex.stackexchange.com/questions/32824/
-				show-inline-math-as-if-it-were-display-math}
-			$\frac{1}{n-1} \sum\limits_{i=1}^{n} (x_{ij} - \bar{x_j})^2$
-			
-			$\prod\limits_{j=0}^J k_j$
-			
-			$\int\limits_{-\infty}^\infty f(x)\,\mathrm{d}x$
-			
-		\subsection{実験内容}
-			変調とは,伝送媒体である波(電波,光など)に情報を乗せる操作である.
-			波は.振幅と周波数,位相をパラメータとして構成される.
-			伝送媒体の波を搬送波(Carrier)と呼ぶ.搬送波は,次式で表せる.
-			% math
-			\begin{align}
-				\label{math:搬送波}
-				s(t) = r(t) \cdot cos(2 \pi f_c t + \vartheta (t) )
-			\end{align}
-			$f_c$ を搬送波周波数と呼ぶ.携帯電話の代表値では 860MHz である.
-			式(\ref{math:搬送波})を展開すると次式を得る.
-			% math
-			\begin{align}
-				\label{math:搬送波（展開）}
-				s(t) = I(t) \cdot cos(2 \pi f_c t) - Q(t) \cdot sin(2 \pi f_c t)
-			\end{align}
-			式(\ref{math:搬送波})は式(\ref{math:搬送波（展開）})と等価であり,
-			表現の方法が違うのみである.式(\ref{math:搬送波（展開）})の表現において
-			$I(t)$を搬送波の同相成分,$Q(t)$を直交成分と言う.
-			これは余弦波と正弦波が互いに直交(1 周期積分してゼロとなる)しているためである.
-			さらに,式(\ref{math:搬送波（展開）})は次のように表せる.
-			% math
-			\begin{align}
-				\label{搬送波（展開）別表現}
-				\begin{split}
-					s(t) 
-						&= Re \left\{ \left( I(t) + j \cdot Q(t) \right)
-							\cdot e^{j2 \pi f_c t} \right\} \\
-						&= Re \left\{ u(t) \cdot e^{j2 \pi f_c t} \right\} \\
-					u(t)&= I(t) + j \cdot Q(t)
-				\end{split}
-			\end{align}
+\let\thesection=\oldthesection
+\let\thesubsection=\oldthesubsection
+\section{URLを使用}
+\begin{itemize}
+  \item \url{https://www.sharelatex.com/learn/Hyperlinks}
+\end{itemize}
+    
+\section{数式} \label{数式}
+\subsection{Show inline math as if it were display math}
+\url{https://tex.stackexchange.com/questions/32824/
+show-inline-math-as-if-it-were-display-math}
+$\frac{1}{n-1} \sum\limits_{i=1}^{n} (x_{ij} - \bar{x_j})^2$
+            
+$\prod\limits_{j=0}^J k_j$
+            
+$\int\limits_{-\infty}^\infty f(x)\,\mathrm{d}x$
+            
+\subsection{実験内容}
+変調とは,伝送媒体である波(電波,光など)に情報を乗せる操作である.
+波は.振幅と周波数,位相をパラメータとして構成される.
+伝送媒体の波を搬送波(Carrier)と呼ぶ.搬送波は,次式で表せる.
+% math
+\begin{align}
+  \label{math:搬送波}                              
+  s(t) = r(t) \cdot cos(2 \pi f_c t + \vartheta (t) ) 
+\end{align}
+$f_c$ を搬送波周波数と呼ぶ.携帯電話の代表値では 860MHz である.
+式(\ref{math:搬送波})を展開すると次式を得る.
+% math
+\begin{align}
+  \label{math:搬送波（展開）}                               
+  s(t) = I(t) \cdot cos(2 \pi f_c t) - Q(t) \cdot sin(2 \pi f_c t) 
+\end{align}
+式(\ref{math:搬送波})は式(\ref{math:搬送波（展開）})と等価であり,
+表現の方法が違うのみである.式(\ref{math:搬送波（展開）})の表現において
+$I(t)$を搬送波の同相成分,$Q(t)$を直交成分と言う.
+これは余弦波と正弦波が互いに直交(1 周期積分してゼロとなる)しているためである.
+さらに,式(\ref{math:搬送波（展開）})は次のように表せる.
+% math
+\begin{align}
+  \label{搬送波（展開）別表現}
+  \begin{split}
+  s(t) 
+       & = Re \left\{ \left( I(t) + j \cdot Q(t) \right)   
+  \cdot e^{j2 \pi f_c t} \right\} \\
+       & = Re \left\{ u(t) \cdot e^{j2 \pi f_c t} \right\} \\
+  u(t) & = I(t) + j \cdot Q(t)                             
+  \end{split}
+\end{align}
 
-		\subsection{行列のスケーリング}
-			% 行列matrixのサイズをスケーリングする
-			%\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
-			\begin{align*}
-				X
-				&= \begin{bmatrix}
-						\sum\limits_{i=1}^n (x_{i1}-\bar{x_1})^2 & \cdots 
-							& \sum\limits_{i=1}^n (x_{i1}-\bar{x_1})(x_{ip}-\bar{x_p}) \\
-						\vdots & \ddots & \vdots \\
-						\sum\limits_{i=1}^n (x_{ip}-\bar{x_p})(x_{i1}-\bar{x_1}) 
-							& \cdots & \sum\limits_{i=1}^n (x_{ip}-\bar{x_p})^2
-					\end{bmatrix} \\
-				&= \scalemath{0.3}{
-						\begin{bmatrix}
-							\sum\limits_{i=1}^n (x_{i1}-\bar{x_1})^2 & \cdots 
-								& \sum\limits_{i=1}^n (x_{i1}-\bar{x_1})(x_{ip}-\bar{x_p}) \\
-							\vdots & \ddots & \vdots \\
-							\sum\limits_{i=1}^n (x_{ip}-\bar{x_p})(x_{i1}-\bar{x_1}) 
-								& \cdots & \sum\limits_{i=1}^n (x_{ip}-\bar{x_p})^2
-						\end{bmatrix}
-					}
-			\end{align*}
+\subsection{行列のスケーリング}
+% 行列matrixのサイズをスケーリングする
+%\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+\begin{align*}
+  X
+  &= \begin{bmatrix}
+  \sum\limits_{i=1}^n (x_{i1}-\bar{x_1})^2 & \cdots 
+  & \sum\limits_{i=1}^n (x_{i1}-\bar{x_1})(x_{ip}-\bar{x_p}) \\
+  \vdots & \ddots & \vdots                                   \\
+  \sum\limits_{i=1}^n (x_{ip}-\bar{x_p})(x_{i1}-\bar{x_1}) 
+         & \cdots & \sum\limits_{i=1}^n (x_{ip}-\bar{x_p})^2 
+  \end{bmatrix} \\
+  &= \scalemath{0.3}{
+  \begin{bmatrix}
+  \sum\limits_{i=1}^n (x_{i1}-\bar{x_1})^2 & \cdots 
+  & \sum\limits_{i=1}^n (x_{i1}-\bar{x_1})(x_{ip}-\bar{x_p}) \\
+  \vdots & \ddots & \vdots                                   \\
+  \sum\limits_{i=1}^n (x_{ip}-\bar{x_p})(x_{i1}-\bar{x_1}) 
+         & \cdots & \sum\limits_{i=1}^n (x_{ip}-\bar{x_p})^2 
+  \end{bmatrix}
+  }
+\end{align*}
 
-	
-	\section{プログラミングコード}
-		以下のPython3コードによって描画した.
-		% Coding
-		\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+    
+\section{プログラミングコード}
+以下のPython3コードによって描画した.
+% Coding
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -469,15 +534,15 @@ ax.set_xlabel("frequency[Hz]")
 ax.set_ylabel("Magnitude-squared [dB]")
 ax.legend(loc="lower right", prop={'size': 20})
 plt.show()
-		\end{lstlisting}
-		
+\end{lstlisting}
+        
 
 
-		
+        
 
-	\printindex
+\printindex
 \end{document}
 
-		
-		
+        
+        
 
