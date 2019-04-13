@@ -1,0 +1,36 @@
+\documentclass[dvipdfmx, 10pt, aspectratio=169]{beamer}  %8,9,10,11,12,14,17,20pt
+\usepackage{bxdpx-beamer}  % dvipdfmx対応
+
+\usepackage{forloop}
+
+% put block text at the absolute position
+% https://nxg.me.uk/dist/textpos/textpos.pdf
+% https://tex.stackexchange.com/questions/204196/beamer-changing-textwidth
+%\usepackage[absolute,overlay]{textpos}
+\usepackage[absolute,overlay,showboxes]{textpos}
+
+\usetheme{metropolis}  % テーマの名前
+
+\begin{document}
+  \begin{frame}
+    \frametitle{}
+    \title{textblock position}
+    \author{pollenjp}
+    \date{\today}
+    \titlepage
+  \end{frame}
+
+  \begin{frame}
+    \newcounter{loopCounterOne}
+    \newcounter{loopCounterTwo}
+    \forloop{loopCounterOne}{0}{\value{loopCounterOne} < 16}{
+      \forloop{loopCounterTwo}{0}{\value{loopCounterTwo} < 16}{
+        \begin{textblock}{0.99}(\value{loopCounterOne},\value{loopCounterTwo})
+          (\arabic{loopCounterOne},\arabic{loopCounterTwo})
+        \end{textblock}
+      }
+    }
+  \end{frame}
+\end{document}
+
+
