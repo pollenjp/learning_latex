@@ -6,7 +6,11 @@ CLEAN_LIST := $(patsubst %.tex,%.idx,$(wildcard *.tex)) \
               $(patsubst %.tex,%.dvi,$(wildcard *.tex)) \
               $(patsubst %.tex,%.pdf,$(wildcard *.tex)) \
               $(patsubst %.tex,%.log,$(wildcard *.tex)) \
-              $(patsubst %.tex,%.aux,$(wildcard *.tex))
+              $(patsubst %.tex,%.aux,$(wildcard *.tex)) \
+              $(patsubst %.tex,%.toc,$(wildcard *.tex)) \
+              $(patsubst %.tex,%.snm,$(wildcard *.tex)) \
+              $(patsubst %.tex,%.nav,$(wildcard *.tex)) \
+              $(patsubst %.tex,%.out,$(wildcard *.tex))
 
 build :
 ifndef TARGET
