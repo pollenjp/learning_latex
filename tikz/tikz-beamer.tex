@@ -1,0 +1,134 @@
+\documentclass[dvipdfmx, 12pt, aspectratio=169]{beamer}  %8,9,10,11,12,14,17,20pt
+\usepackage{bxdpx-beamer}  % dvipdfmx対応
+\usepackage{pxjahyper}  % しおりの和文対応
+                        % "hyperref"の日本語文字化け対策
+\usepackage{minijs}
+\renewcommand{\kanjifamilydefault}{\gtdefault}  % 和文をゴシックに
+
+\usepackage{float}  % 図・表位置[H]
+
+% subfigure
+\usepackage{subcaption}
+
+% put block text at the absolute position
+% https://nxg.me.uk/dist/textpos/textpos.pdf
+% https://tex.stackexchange.com/questions/204196/beamer-changing-textwidth
+\usepackage[absolute,overlay]{textpos}
+
+%====================
+% url custom  
+%====================
+\usepackage{hyperref}  % Link/URL
+\hypersetup{
+    colorlinks,
+    linkcolor=,
+    filecolor=magenta,
+    urlcolor=cyan,
+    bookmarksopen,
+    bookmarksdepth=2,
+    bookmarkstype=toc,  % toc link
+%    linktocpage=true,   % tocのページ番号の方にリンクが現れる
+    bookmarks=true,     % toc link
+    % ref
+    % https://texwiki.texjp.org/?hyperref#h026c44c
+}
+
+%====================
+% 図とcaptionとの間の距離を調整
+%====================
+% [spacing - How can I modify vertical space between figure and caption? - TeX - LaTeX Stack Exchange](https://tex.stackexchange.com/a/45996/185738)
+% [floats - How to remove spacing between figure and caption in the beamer class - TeX - LaTeX Stack Exchange](https://tex.stackexchange.com/a/226154/185738)
+%\setlength{\abovecaptionskip}{-5pt plus 0pt minus 0pt}
+%\setlength{\belowcaptionskip}{0pt plus 0pt minus 0pt}
+
+%====================
+% ハイライト - highlight
+%====================
+% [A Guide to Using Beamer - University of Windsor 08-02.pdf](http://www1.uwindsor.ca/math/sites/uwindsor.ca.math/files/08-02.pdf)
+
+%====================
+% [TikZ — Tasuku Soma's webpage](https://www.opt.mist.i.u-tokyo.ac.jp/~tasuku/tikz.html)
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\newcommand{\highlight}[2][yellow]{\tikz[baseline=(x.base)]{\node[rectangle,rounded corners,fill=#1!10](x){#2};}}
+\newcommand{\highlightcap}[3][yellow]{\tikz[baseline=(x.base)]{\node[rectangle,rounded corners,fill=#1!10](x){#2} node[below of=x, color=#1]{#3};}}
+\usepackage{pxpgfmark}   % TikZを読み込む後に書く
+\usetikzlibrary{shapes.callouts}
+
+%====================
+% テーマの名前
+%====================
+\usetheme{metropolis}
+
+%===============================================================================
+%===============================================================================
+%===============================================================================
+
+\begin{document}
+  \begin{frame}
+    \frametitle{}
+    \title{コンピュータ画像処理}
+    \subtitle{2.3 画像処理アルゴリズムの形態 (p.25 - p.38)}
+    \author{上智大学 川中研 B4 杉崎弘明}
+    \date{2019/04/15 Mon \\
+    }
+    \maketitle
+  \end{frame}
+
+  \begin{frame}
+    \begin{tikzpicture}
+      \node[rectangle,fill=cyan!10,text width=3cm,text centered,
+        rounded corners,minimum height=1.5cm]{root};
+    \end{tikzpicture}
+
+    \begin{tikzpicture}
+        \tikzset{block/.style={rectangle, fill=cyan!10, text width=3cm,
+                               text centered, rounded corners,
+                               minimum height=1.5cm}};
+        \node[block] {root};
+    \end{tikzpicture}
+  \end{frame}
+
+  \begin{frame}
+    \begin{tikzpicture}
+      \tikzset{block/.style={rectangle, fill=cyan!10, text width=3cm,
+                             text centered, rounded corners,
+                             minimum height=1.5cm}};
+      \node[block] {root}
+        child{ node[block] {child1} }
+        child{ node[block] {child2} }
+        child{ node[block] {child3} };
+    \end{tikzpicture}
+  \end{frame}
+
+  \begin{frame}
+    \begin{align*}
+        f(\mathbf{w}, b) =
+            \highlightcap[red]{$\displaystyle \sum_{i=1}^k \left(y_i - \mathbf{w}^\top \mathbf{x}_i - b \right)^2$}{経験誤差}
+            +
+            \highlightcap[blue]{$\displaystyle \frac{\lambda}{2} \left\|\mathbf{w} \right\|^2$}{正則化項}
+    \end{align*}
+  \end{frame}
+
+  \begin{frame}
+    \begin{textblock}{5.0}(10,8)
+      \begin{tikzpicture}
+        \tikzset{block/.style={rectangle, fill=cyan!10, text width=3cm,
+                               text centered, rounded corners,
+                               minimum height=1.5cm}};
+        \node[block] {root}
+          child{ node[block] {child1} }
+          child{ node[block] {child2} }
+          child{ node[block] {child3} };
+      \end{tikzpicture}
+    \end{textblock}
+
+    \begin{tikzpicture}
+      %\node[rectangle callout, fill=red!80, white, callout absolute pointer={(bgraph.north)}, above=of bgraph]{2部グラフ};
+      \node[rectangle callout, fill=red!80, white, text width=4em,
+            callout relative pointer={{(1,1)}}]{2部グラフ\\だよ};
+    \end{tikzpicture}
+
+  \end{frame}
+
+\end{document}
